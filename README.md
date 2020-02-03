@@ -1,0 +1,3 @@
+# 博客平台
+
+使用前后端分离的技术实现一个简易博客系统，后端采用java开发语言，使用springboot、spring、springmvc、mybatis等开源技术作，主要为前端提供各种接口，解决前后端调用跨域的问题，实现统一登录，登录信息存入redis中，将登录信息以token的形式返回给前端，前端每次请求后台都校验token的有效性。前端采用vue开发，ui框架采用的是element-ui，并用axios作为http请求工具。
