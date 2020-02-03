@@ -1,0 +1,46 @@
+server:
+  port: 8083
+spring:
+  datasource:
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8
+    username: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    platform: mysql
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT1FROMDUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+  thymeleaf:
+    mode: HTML5
+    cache: false
+  redis:
+    port: 6379
+    database: 0
+    password:
+    host: localhost
+    timeout: 60s
+    lettuce:
+      pool:
+        max-idle: 10
+        max-active: 10
+        min-idle: 5
+        max-wait: -1ms
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-locations: classpath:mybatis/mybatis-config.xml
+  type-aliases-package: com.h52mm.blog.domain
+
+
+
+
