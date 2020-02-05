@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import store from '@/store'
+import axios from 'axios'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -32,8 +33,9 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-store.commit('login/setToken', '123456')
-console.info( store.getters["login/getToken"])
+var token = localStorage.getItem('token');
+store.commit('login/setToken', token)
+console.info(store.getters["login/getToken"])
 //导航守卫判断是否登录
 router.beforeEach((to, from, next) => {
   // 判断该路由是否需要登录权限
@@ -44,9 +46,21 @@ router.beforeEach((to, from, next) => {
           path: '/'
         })
       } else {
-        next({
-          path: to.path || '/'
-        })
+        //调用登录接口
+
+        axios({
+          method: "get",
+          url: "/checktoken?token="+localStorage.getItem('token')
+          // withCredentials:true,
+        }).then(function (response) {
+          console.info(response);
+          if (response.data.success) {
+            console.info("################");
+            next();
+          } else {
+            next(`/login?redirect=${to.path}`);
+          }
+        });
       }
     } else {
       if (to.path === '/login') {

@@ -111,19 +111,22 @@ import qs from 'qs'
 import uuidv1 from 'uuid/v1'
 export default {
   data() {
+    let reg=new RegExp('-','g');
+    let token=JSON.stringify(uuidv1()).replace(reg,'');
     return {
       account: "",
       pwd: "",
       code: "",
       checked: false,
-      vtoken:uuidv1(),
+      vtoken:token,
       fits: ["fill", "contain", "cover", "none", "scale-down"],
-      url: process.env.VUE_APP_API_URL + "/kaptcha/getcode?vtoken="+this.vtoken
+      url: process.env.VUE_APP_API_URL + "/kaptcha/getcode?vtoken="+token
     };
   },
   methods: {
     changCode: function() {
-      var token=this.vtoken=uuidv1();
+      let reg=new RegExp('-','g');
+      var token=this.vtoken=JSON.stringify(uuidv1()).replace(reg,'');
       this.url =process.env.VUE_APP_API_URL + "/kaptcha/getcode?vtoken="+token+"&code=" + Math.random();
     },
     login() {
@@ -171,8 +174,16 @@ export default {
           verifycode:code,
           vtoken:vtoken
         }
-      }).then(function(response){
-         console.info(response)
+      }).then((response)=>{
+         console.info(response);
+         if(response.data.success){
+           //登录成功，将token记录到localstorage中
+           localStorage.setItem("token",response.data.data.token);
+           localStorage.setItem("user",JSON.stringify(response.data.data));
+            console.info("################");
+         }
+         console.info(localStorage.getItem("token"));
+         this.$router.push('/');
       });
     }
   }

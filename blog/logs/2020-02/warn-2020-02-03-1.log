@@ -1,0 +1,2 @@
+[18:00:42:945] [WARN] - org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration.checkTemplateLocationExists(ThymeleafAutoConfiguration.java:106) - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+[18:00:42:950] [WARN] - org.thymeleaf.templatemode.TemplateMode.parse(TemplateMode.java:150) - [THYMELEAF][main] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.

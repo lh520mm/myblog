@@ -10,6 +10,7 @@ axios.defaults.withCredentials=true
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
     console.info("----------------------")
+    config.headers.common['Authorization']="Bearer "+localStorage.getItem("token");
     return config;
   }, function (error) {
     // Do something with request error

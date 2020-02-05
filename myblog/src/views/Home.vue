@@ -58,45 +58,12 @@
                 <template slot="title">
                   <i :class="row.lable"></i>
                   <span slot="title" :class="isCollapse ? 'title-hide':'title-show'">{{row.title}}</span>
-               </template>
+                </template>
                 <el-menu-item-group>
                   <el-menu-item v-for="ch in row.items " :key="ch.uri" :index="ch.uri">{{ch.title}}</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
             </div>
-            <!-- <el-menu-item index="/">
-              <i class="el-icon-s-home"></i>
-              <span slot="title">系统首页</span>
-            </el-menu-item>
-            <el-menu-item index="2">
-              <i class="el-icon-s-management"></i>
-              <span slot="title">我的博客</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-camera-solid"></i>
-              <span slot="title">我的相册</span>
-            </el-menu-item>
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span slot="title">权限管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="1-1">用户管理</el-menu-item>
-                <el-menu-item index="1-2">角色管理</el-menu-item>
-                <el-menu-item index="1-3">菜单管理</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">
-                <i class="el-icon-s-tools"></i>
-                <span slot="title">运维管理</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item index="1-1">系统监控</el-menu-item>
-                <el-menu-item index="1-2">日志管理</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu> -->
           </el-menu>
         </el-aside>
         <el-main>
@@ -183,7 +150,11 @@ body > .el-container {
   width: 200px;
   min-height: 400px;
 }
-.el-menu--collapse >div>.el-submenu>.el-submenu__title>.el-submenu__icon-arrow {
+.el-menu--collapse
+  > div
+  > .el-submenu
+  > .el-submenu__title
+  > .el-submenu__icon-arrow {
   display: none !important;
 }
 .ss {
@@ -200,16 +171,16 @@ body > .el-container {
 .title-hide {
   display: none !important;
 }
-.el-submenu>.el-submenu__title .el-submenu__icon-arrow{
-	-webkit-transform: rotateZ(-90deg); 
-	-ms-transform: rotate(-90deg);
-	transform: rotateZ(-90deg); 
+.el-submenu > .el-submenu__title .el-submenu__icon-arrow {
+  -webkit-transform: rotateZ(-90deg);
+  -ms-transform: rotate(-90deg);
+  transform: rotateZ(-90deg);
 }
 /*菜单展开*/
-.el-submenu.is-opened>.el-submenu__title .el-submenu__icon-arrow{
-	-webkit-transform: rotateZ(0deg); 
-	-ms-transform: rotate(0deg);
-	transform: rotateZ(0deg); 
+.el-submenu.is-opened > .el-submenu__title .el-submenu__icon-arrow {
+  -webkit-transform: rotateZ(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotateZ(0deg);
 }
 </style>
 
@@ -221,45 +192,7 @@ export default {
   data() {
     return {
       isCollapse: true,
-      menu: [
-        {
-          title: "系统首页",
-          lable: "el-icon-s-home",
-          uri: "/",
-          items: []
-        },
-        {
-          title: "我的博客",
-          lable: "el-icon-s-management",
-          uri: "2",
-          items: []
-        },
-        {
-          title: "我的相册",
-          lable: "el-icon-camera-solid",
-          uri: "3",
-          items: []
-        },
-        {
-          title: "权限管理",
-          lable: "el-icon-s-tools",
-          uri: "4",
-          items: [
-            {
-              title: "用户管理",
-              uri: "4-1"
-            },
-            {
-              title: "角色管理",
-              uri: "4-2"
-            },
-            {
-              title: "菜单管理",
-              uri: "4-3"
-            }
-          ]
-        }
-      ]
+      menu: []
     };
   },
   methods: {
@@ -281,6 +214,21 @@ export default {
         this.isCollapse = true;
       }
     }
+  },
+  created() {
+    var user = localStorage.getItem("user");
+    var jsonUser = JSON.parse(user);
+    this.axios
+      .get("/menu/list", {
+        params: {
+          userid: jsonUser.rowId
+        }
+      })
+      .then(response => {
+        if (response.data.success) {
+          this.menu = response.data.data;
+        }
+      });
   }
 };
 </script>
