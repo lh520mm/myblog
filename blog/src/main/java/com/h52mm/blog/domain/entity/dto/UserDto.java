@@ -16,19 +16,13 @@ public class UserDto implements Serializable {
     private Date updateTime;
     private Boolean isDel;
     private Integer state;
-    private String depId;
-    private String roleId;
+    private Integer roleId;
     private String jobName;
     private String rankName;
     private Integer combatPower;
-    private Date enlistmentTime;
-    private Date retirementTime;
     private String roleName;
-    private String depName;
-
     private Integer age;
     private Boolean sex;
-
     private String token;
 
     public String getRowId() {
@@ -119,19 +113,11 @@ public class UserDto implements Serializable {
         this.state = state;
     }
 
-    public String getDepId() {
-        return depId;
-    }
-
-    public void setDepId(String depId) {
-        this.depId = depId;
-    }
-
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(String roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
@@ -159,36 +145,12 @@ public class UserDto implements Serializable {
         this.combatPower = combatPower;
     }
 
-    public Date getEnlistmentTime() {
-        return enlistmentTime;
-    }
-
-    public void setEnlistmentTime(Date enlistmentTime) {
-        this.enlistmentTime = enlistmentTime;
-    }
-
-    public Date getRetirementTime() {
-        return retirementTime;
-    }
-
-    public void setRetirementTime(Date retirementTime) {
-        this.retirementTime = retirementTime;
-    }
-
     public String getRoleName() {
         return roleName;
     }
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    public String getDepName() {
-        return depName;
-    }
-
-    public void setDepName(String depName) {
-        this.depName = depName;
     }
 
     public Integer getAge() {
@@ -214,4 +176,6 @@ public class UserDto implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
+
+
 }

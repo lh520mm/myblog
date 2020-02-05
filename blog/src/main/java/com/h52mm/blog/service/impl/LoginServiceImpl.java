@@ -1,12 +1,13 @@
 package com.h52mm.blog.service.impl;
 
 import com.h52mm.blog.commons.CodeMessage;
-import com.h52mm.blog.commons.WechatResponse;
+import com.h52mm.blog.commons.BlogResponse;
 import com.h52mm.blog.domain.dao.UserDao;
 import com.h52mm.blog.domain.entity.User;
 import com.h52mm.blog.domain.entity.dto.UserDto;
 import com.h52mm.blog.exception.BusinessException;
 import com.h52mm.blog.service.LoginService;
+import com.h52mm.blog.util.CopyUtil;
 import com.h52mm.blog.util.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -29,9 +30,9 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
-    public WechatResponse doLogin(String account, String pwd, String verifycode, String vtoken) {
+    public BlogResponse doLogin(String account, String pwd, String verifycode, String vtoken) {
 
-        WechatResponse response=WechatResponse.newInstance();
+        BlogResponse response= BlogResponse.newInstance();
         if(StringUtils.isEmpty(account)){
             //用户账号不能为空
           throw new BusinessException("登录账号不能为空");
@@ -72,18 +73,27 @@ public class LoginServiceImpl implements LoginService {
             if (userToken != null) {
                 redisTemplate.opsForValue().set("user:"+breaertoken, user, 7200, TimeUnit.SECONDS);
             }
-            UserDto userDto=new UserDto();
+            UserDto userDto=CopyUtil.copy(user,UserDto.class);
             userDto.setToken(breaertoken);
-            userDto.setAccount(account);
-            userDto.setNickname(user.getNickname());
-            userDto.setHeadPortrait(user.getHeadPortrait());
-            userDto.setRowId(user.getRowId());
             response.setData(userDto);
         } catch (IncorrectCredentialsException e) {
             response.checkSuccess(false, CodeMessage.USER_ERR_ACCOUNT.name());
         } catch (UnknownAccountException e) {
             response.checkSuccess(false, CodeMessage.USER_ERR_ACCOUNT.name());
         }
+        return response;
+    }
+
+    @Override
+    public BlogResponse checkToken(String token) {
+        BlogResponse response= BlogResponse.newInstance();
+        if(token==null||"".equals(token)){
+            response.checkSuccess(false,CodeMessage.TOKEN_TIME_OUT.name());
+        }
+        if(!redisTemplate.hasKey("user:"+token)){
+            response.checkSuccess(false,CodeMessage.TOKEN_TIME_OUT.name());
+        }
+        redisTemplate.expire("user:"+token,7200, TimeUnit.SECONDS);
         return response;
     }
 }

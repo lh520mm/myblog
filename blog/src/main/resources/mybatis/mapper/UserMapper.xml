@@ -17,15 +17,11 @@
         <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="STATE" jdbcType="BIT" property="state"/>
         <result column="IS_DEL" jdbcType="BIT" property="isDel"/>
-        <result column="DEP_ID" jdbcType="VARCHAR" property="depId"/>
-        <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId"/>
+        <result column="ROLE_ID" jdbcType="INTEGER" property="roleId"/>
         <result column="JOB_NAME" jdbcType="VARCHAR" property="jobName"/>
         <result column="RANK_NAME" jdbcType="VARCHAR" property="rankName"/>
         <result column="COMBAT_POWER" jdbcType="INTEGER" property="combatPower"/>
-        <result column="ENLISTMENT_TIME" jdbcType="TIMESTAMP" property="enlistmentTime"/>
-        <result column="RETIREMENT_TIME" jdbcType="TIMESTAMP" property="retirementTime"/>
         <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
-        <result column="DEP_NAME" jdbcType="VARCHAR" property="depName"/>
         <result column="SEX" jdbcType="BIT" property="sex"/>
         <result column="AGE" jdbcType="INTEGER" property="age"/>
     </resultMap>
@@ -37,6 +33,8 @@
          select u.*,r.ROLE_ID from t_user u LEFT JOIN t_user_role r on u.ROW_ID=r.USER_ID and r.IS_DEL='0' where u.IS_DEL='0' and ACCOUNT=#{account}
     </select>
 
-
+    <select id="getUserByRowId" resultMap="BaseResultMap">
+         select u.*,r.ROLE_ID from t_user u LEFT JOIN t_user_role r on u.ROW_ID=r.USER_ID and r.IS_DEL='0' where u.IS_DEL='0' and u.ROW_ID=#{rowId}
+    </select>
 
 </mapper>

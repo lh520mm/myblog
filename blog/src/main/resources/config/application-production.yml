@@ -1,10 +1,10 @@
 server:
-  port: 80
+  port: 8083
 spring:
   datasource:
-    password: 2452860392liuhao
+    password: 123456
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://101.201.65.45:3306/wechat?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8
     username: root
     type: com.alibaba.druid.pool.DruidDataSource
     platform: mysql
@@ -26,8 +26,8 @@ spring:
   redis:
     port: 6379
     database: 0
-    password: 2452860392liuhao
-    host: 101.201.65.45
+    password:
+    host: localhost
     timeout: 60s
     lettuce:
       pool:
@@ -39,7 +39,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   config-locations: classpath:mybatis/mybatis-config.xml
-  type-aliases-package: com.h52mm.demo.domain
+  type-aliases-package: com.h52mm.blog.domain
 
 
 

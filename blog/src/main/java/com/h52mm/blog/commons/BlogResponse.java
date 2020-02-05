@@ -5,7 +5,7 @@ package com.h52mm.blog.commons;
  * @date 2018/10/30
  * 接口统一返回实体类
  */
-public class WechatResponse {
+public class BlogResponse {
     /**
      * 响应状态,布尔值, false为失败,true为成功,只准出现这两个值,不是字符串
      */
@@ -30,8 +30,8 @@ public class WechatResponse {
     private Integer recordsTotal;
     private Integer recordsFiltered;
 
-    public static WechatResponse newInstance() {
-        return new WechatResponse();
+    public static BlogResponse newInstance() {
+        return new BlogResponse();
     }
 
     public boolean isSuccess() {
@@ -41,19 +41,19 @@ public class WechatResponse {
     /**
      * 设置为成功状态
      */
-    public WechatResponse setAsSuccess() {
+    public BlogResponse setAsSuccess() {
         this.success = true;
         return this;
     }
 
-    public static WechatResponse createSuccess() {
-        WechatResponse data = new WechatResponse();
+    public static BlogResponse createSuccess() {
+        BlogResponse data = new BlogResponse();
         data.success = true;
         return data;
     }
 
-    public static WechatResponse createFailture() {
-        WechatResponse data = new WechatResponse();
+    public static BlogResponse createFailture() {
+        BlogResponse data = new BlogResponse();
         data.success = false;
         return data;
     }
@@ -74,7 +74,7 @@ public class WechatResponse {
         return message;
     }
 
-    public WechatResponse setMessage(String message) {
+    public BlogResponse setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -127,7 +127,7 @@ public class WechatResponse {
         this.recordsFiltered = recordsFiltered;
     }
 
-    public WechatResponse checkSuccess(boolean success, String codeMessageName) {
+    public BlogResponse checkSuccess(boolean success, String codeMessageName) {
         this.success = success;
         if (!success) {
             CodeMessage codeMessage = CodeMessage.valueOf(codeMessageName);
@@ -137,11 +137,11 @@ public class WechatResponse {
         return this;
     }
 
-    public WechatResponse setAsFailure(String codeMessageName) {
+    public BlogResponse setAsFailure(String codeMessageName) {
         return this.checkSuccess(false, codeMessageName);
     }
 
-    public WechatResponse checkSuccess(boolean success, String errorName, String successName) {
+    public BlogResponse checkSuccess(boolean success, String errorName, String successName) {
         this.success = success;
         if (success) {
             CodeMessage codeMessage = CodeMessage.valueOf(successName);

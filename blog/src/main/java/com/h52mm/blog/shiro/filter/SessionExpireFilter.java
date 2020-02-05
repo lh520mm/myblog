@@ -2,7 +2,7 @@ package com.h52mm.blog.shiro.filter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.h52mm.blog.commons.CodeMessage;
-import com.h52mm.blog.commons.WechatResponse;
+import com.h52mm.blog.commons.BlogResponse;
 import com.h52mm.blog.service.UserService;
 import org.apache.shiro.web.servlet.AdviceFilter;
 import org.slf4j.Logger;
@@ -57,9 +57,9 @@ public class SessionExpireFilter extends AdviceFilter {
                     String requestType = ((HttpServletRequest) request).getHeader("X-Requested-With");
                     if ("XMLHttpRequest".equals(requestType)) {
                         PrintWriter out = rep.getWriter();
-                        WechatResponse wechatResponse = WechatResponse.newInstance();
-                        wechatResponse.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
-                        out.print(JSONObject.toJSONString(wechatResponse));
+                        BlogResponse blogResponse = BlogResponse.newInstance();
+                        blogResponse.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
+                        out.print(JSONObject.toJSONString(blogResponse));
                     } else {
                         rep.sendRedirect("/login");
                     }
@@ -69,9 +69,9 @@ public class SessionExpireFilter extends AdviceFilter {
                 String requestType = ((HttpServletRequest) request).getHeader("X-Requested-With");
                 if ("XMLHttpRequest".equals(requestType)) {
                     PrintWriter out = rep.getWriter();
-                    WechatResponse wechatResponse = WechatResponse.newInstance();
-                    wechatResponse.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
-                    out.print(JSONObject.toJSONString(wechatResponse));
+                    BlogResponse blogResponse = BlogResponse.newInstance();
+                    blogResponse.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
+                    out.print(JSONObject.toJSONString(blogResponse));
                 } else {
                     rep.sendRedirect("/login");
                 }
@@ -81,9 +81,9 @@ public class SessionExpireFilter extends AdviceFilter {
             String requestType = ((HttpServletRequest) request).getHeader("X-Requested-With");
             if ("XMLHttpRequest".equals(requestType)) {
                 PrintWriter out = rep.getWriter();
-                WechatResponse wechatResponse = WechatResponse.newInstance();
-                wechatResponse.checkSuccess(false, CodeMessage.SYSTEM_BUSY.name());
-                out.print(JSONObject.toJSONString(wechatResponse));
+                BlogResponse blogResponse = BlogResponse.newInstance();
+                blogResponse.checkSuccess(false, CodeMessage.SYSTEM_BUSY.name());
+                out.print(JSONObject.toJSONString(blogResponse));
             } else {
                 rep.sendRedirect("/login");
             }
