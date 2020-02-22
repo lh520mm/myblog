@@ -17,12 +17,12 @@ public class User implements  Serializable {
     private Boolean isDel;
     private Integer state;
     private Integer roleId;
-    private String jobName;
-    private String rankName;
-    private Integer combatPower;
+    private Integer lev;
     private String roleName;
     private Integer age;
     private Boolean sex;
+    private String birthday;
+    private String motto;
 
     public String getRowId() {
         return rowId;
@@ -120,30 +120,6 @@ public class User implements  Serializable {
         this.roleId = roleId;
     }
 
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public String getRankName() {
-        return rankName;
-    }
-
-    public void setRankName(String rankName) {
-        this.rankName = rankName;
-    }
-
-    public Integer getCombatPower() {
-        return combatPower;
-    }
-
-    public void setCombatPower(Integer combatPower) {
-        this.combatPower = combatPower;
-    }
-
     public String getRoleName() {
         return roleName;
     }
@@ -166,5 +142,29 @@ public class User implements  Serializable {
 
     public void setSex(Boolean sex) {
         this.sex = sex;
+    }
+
+    public Integer getLev() {
+        return lev;
+    }
+
+    public void setLev(Integer lev) {
+        this.lev = lev;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getMotto() {
+        return motto;
+    }
+
+    public void setMotto(String motto) {
+        this.motto = motto;
     }
 }

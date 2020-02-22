@@ -37,6 +37,8 @@ public enum CodeMessage {
     DEP_IS_HAVE("100000104","该班级已存在或者该班长是别的班的班长"),
     DEP_LEADER_NO_HAVE("100000105","该班长编号不存在"),
     USER_OK_HAVE("100000106","该用户账号已存在"),
+    USER_ERR_ACCOUNT_NULL("100000107","账号不能为空"),
+    USER_ERR_PWD_NULL("100000108","登录密码不能为空"),
     ;
 
     private String code;

@@ -7,6 +7,7 @@ import com.h52mm.blog.domain.entity.User;
 import com.h52mm.blog.domain.entity.dto.UserDto;
 import com.h52mm.blog.exception.BusinessException;
 import com.h52mm.blog.service.LoginService;
+import com.h52mm.blog.util.ConstantUtil;
 import com.h52mm.blog.util.CopyUtil;
 import com.h52mm.blog.util.MD5Utils;
 import org.apache.shiro.SecurityUtils;
@@ -71,7 +72,7 @@ public class LoginServiceImpl implements LoginService {
             //生成token
             String breaertoken= MD5Utils.getMD5ForRandomUUID();
             if (userToken != null) {
-                redisTemplate.opsForValue().set("user:"+breaertoken, user, 7200, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(ConstantUtil.TOKEN_NAME+breaertoken, user, ConstantUtil.LOGINTIME_SECONDS, TimeUnit.SECONDS);
             }
             UserDto userDto=CopyUtil.copy(user,UserDto.class);
             userDto.setToken(breaertoken);
@@ -90,10 +91,10 @@ public class LoginServiceImpl implements LoginService {
         if(token==null||"".equals(token)){
             response.checkSuccess(false,CodeMessage.TOKEN_TIME_OUT.name());
         }
-        if(!redisTemplate.hasKey("user:"+token)){
+        if(!redisTemplate.hasKey(ConstantUtil.TOKEN_NAME+token)){
             response.checkSuccess(false,CodeMessage.TOKEN_TIME_OUT.name());
         }
-        redisTemplate.expire("user:"+token,7200, TimeUnit.SECONDS);
+        redisTemplate.expire(ConstantUtil.TOKEN_NAME+token,ConstantUtil.LOGINTIME_SECONDS, TimeUnit.SECONDS);
         return response;
     }
 }

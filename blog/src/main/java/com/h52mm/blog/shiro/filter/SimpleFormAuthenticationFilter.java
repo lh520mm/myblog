@@ -3,6 +3,7 @@ package com.h52mm.blog.shiro.filter;
 import com.alibaba.fastjson.JSON;
 import com.h52mm.blog.commons.CodeMessage;
 import com.h52mm.blog.commons.BlogResponse;
+import com.h52mm.blog.util.ConstantUtil;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class SimpleFormAuthenticationFilter extends FormAuthenticationFilter {
         log.info(token);
         token=token.split("Bearer")[1].replaceAll(" ","");
         log.info(token);
-        if(!redisTemplate.hasKey("user:"+token)){
+        if(!redisTemplate.hasKey(ConstantUtil.TOKEN_NAME+token)){
             //token 失效
             BlogResponse blogResponse = BlogResponse.newInstance();
             blogResponse.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
@@ -42,7 +43,7 @@ public class SimpleFormAuthenticationFilter extends FormAuthenticationFilter {
             response.getWriter().println(res);
             return false;
         }
-        redisTemplate.expire("user:"+token,7200, TimeUnit.SECONDS);
+        redisTemplate.expire(ConstantUtil.TOKEN_NAME+token,ConstantUtil.LOGINTIME_SECONDS, TimeUnit.SECONDS);
         //校验用户登录信息
         return true;
     }

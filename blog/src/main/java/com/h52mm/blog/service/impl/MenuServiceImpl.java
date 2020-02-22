@@ -9,6 +9,7 @@ import com.h52mm.blog.domain.dao.UserDao;
 import com.h52mm.blog.domain.entity.Menu;
 import com.h52mm.blog.domain.entity.User;
 import com.h52mm.blog.service.MenuService;
+import com.h52mm.blog.util.ConstantUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -39,11 +40,11 @@ public class MenuServiceImpl implements MenuService {
 
 
             String token = authorization.split("Bearer")[1].replaceAll(" ", "");
-            if (!redisTemplate.hasKey("user:" + token)) {
+            if (!redisTemplate.hasKey(ConstantUtil.TOKEN_NAME + token)) {
                 response.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
                 return response;
             }
-            User user = (User) redisTemplate.opsForValue().get("user:" + token);
+            User user = (User) redisTemplate.opsForValue().get(ConstantUtil.TOKEN_NAME + token);
             if (user == null) {
                 response.checkSuccess(false, CodeMessage.TOKEN_TIME_OUT.name());
                 return response;

@@ -18,12 +18,12 @@
         <result column="STATE" jdbcType="BIT" property="state"/>
         <result column="IS_DEL" jdbcType="BIT" property="isDel"/>
         <result column="ROLE_ID" jdbcType="INTEGER" property="roleId"/>
-        <result column="JOB_NAME" jdbcType="VARCHAR" property="jobName"/>
-        <result column="RANK_NAME" jdbcType="VARCHAR" property="rankName"/>
-        <result column="COMBAT_POWER" jdbcType="INTEGER" property="combatPower"/>
+        <result column="LEV" jdbcType="INTEGER" property="lev"/>
         <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
         <result column="SEX" jdbcType="BIT" property="sex"/>
         <result column="AGE" jdbcType="INTEGER" property="age"/>
+        <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday"/>
+        <result column="MOTTO" jdbcType="VARCHAR" property="motto"/>
     </resultMap>
 
 
@@ -36,5 +36,125 @@
     <select id="getUserByRowId" resultMap="BaseResultMap">
          select u.*,r.ROLE_ID from t_user u LEFT JOIN t_user_role r on u.ROW_ID=r.USER_ID and r.IS_DEL='0' where u.IS_DEL='0' and u.ROW_ID=#{rowId}
     </select>
+
+    <select id="getUserTotal" resultType="java.lang.Integer">
+        select count(*) total from t_user where 1=1
+        <if test="account!=null and account!=''">
+            and ACCOUNT=#{account}
+        </if>
+        <if test="nickname!=null and nickname!=''">
+            and NICKNAME like CONCAT('%',#{nickname,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="tel!=null and tel!=''">
+            and TEL=#{tel}
+        </if>
+    </select>
+    <select id="getUserList" resultMap="BaseResultMap">
+        select * from t_user where 1=1
+        <if test="account!=null and account!=''">
+            and ACCOUNT=#{account}
+        </if>
+        <if test="nickname!=null and nickname!=''">
+            and NICKNAME like CONCAT('%',#{nickname,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="tel!=null and tel!=''">
+            and TEL=#{tel}
+        </if>
+         LIMIT #{pageNumber} ,#{pageSize}
+    </select>
+
+   <insert id="save" parameterType="com.h52mm.blog.domain.entity.User">
+       insert into t_user
+       <trim prefix="(" suffix=")" suffixOverrides="," >
+           <if test="rowId!=null">
+               ROW_ID,
+           </if>
+           <if test="account!=null">
+               ACCOUNT,
+           </if>
+           <if test="nickname!=null">
+               NICKNAME,
+           </if>
+           <if test="pwd!=null">
+               PWD,
+           </if>
+           <if test="tel!=null">
+               TEL,
+           </if>
+           <if test="state!=null">
+               STATE,
+           </if>
+
+          <if test="lev!=null">
+              LEV,
+          </if>
+          <if test="birthday!=null">
+              BIRTHDAY,
+          </if>
+          <if test="motto!=null">
+              MOTTO,
+          </if>
+           <if test="sex!=null">
+               SEX,
+           </if>
+           <if test="age!=null">
+               AGE,
+           </if>
+
+           <if test="createTime!=null">
+               CREATE_TIME,
+           </if>
+           <if test="isDel!=null">
+               IS_DEL,
+           </if>
+           <if test="headPortrait!=null">
+               HEAD_PORTRAIT,
+           </if>
+       </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides="," >
+           <if test="rowId!=null">
+               #{rowId,jdbcType=VARCHAR},
+           </if>
+           <if test="account!=null">
+               #{account,jdbcType=VARCHAR},
+           </if>
+           <if test="nickname!=null">
+               #{nickname,jdbcType=VARCHAR},
+           </if>
+           <if test="pwd!=null">
+               #{pwd,jdbcType=VARCHAR},
+           </if>
+           <if test="tel!=null">
+               #{tel,jdbcType=VARCHAR},
+           </if>
+           <if test="state!=null">
+               #{state,jdbcType=BIT},
+           </if>
+           <if test="lev!=null">
+              #{lev},
+           </if>
+           <if test="birthday!=null">
+              #{birthday},
+           </if>
+           <if test="motto!=null">
+               #{motto},
+           </if>
+           <if test="sex!=null">
+               #{sex,jdbcType=BIT},
+           </if>
+           <if test="age!=null">
+               #{age,jdbcType=INTEGER},
+           </if>
+           <if test="createTime!=null">
+               #{createTime,jdbcType=TIMESTAMP},
+           </if>
+           <if test="isDel!=null">
+               #{isDel,jdbcType=BIT},
+           </if>
+           <if test="headPortrait!=null">
+               #{headPortrait},
+           </if>
+       </trim>
+   </insert>
 
 </mapper>
