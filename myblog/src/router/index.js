@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import User from '../views/UserList.vue'
 import store from '@/store'
 import axios from 'axios'
 Vue.use(VueRouter)
@@ -11,12 +12,20 @@ const routes = [{
     name: 'home',
     component: Home,
     children: [{
-      path: '/',
-      component: () => import( /* webpackChunkName: "about" */ '../views/About.vue'),
-      meta: {
-        requiresAuth: true
+        path: '/',
+        component: () => import( /* webpackChunkName: "about" */ '../views/About.vue'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'user',
+        component: User,
+        meta: {
+          requiresAuth: true
+        }
       }
-    }]
+    ]
   },
   {
     path: '/login',
@@ -50,7 +59,7 @@ router.beforeEach((to, from, next) => {
 
         axios({
           method: "get",
-          url: "/checktoken?token="+localStorage.getItem('token')
+          url: "/checktoken?token=" + localStorage.getItem('token')
           // withCredentials:true,
         }).then(function (response) {
           console.info(response);

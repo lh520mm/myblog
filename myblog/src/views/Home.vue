@@ -19,7 +19,7 @@
                   <el-dropdown>
                     <span class="el-dropdown-link">
                       <el-avatar
-                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                        :src="tx"
                       ></el-avatar>
                     </span>
                     <el-dropdown-menu slot="dropdown">
@@ -125,6 +125,7 @@
   text-align: center;
   /* line-height: 160px; */
   overflow: hidden;
+  width: 100%;
   height: 100%;
   padding: 10px 15px 15px 10px !important;
 }
@@ -192,7 +193,8 @@ export default {
   data() {
     return {
       isCollapse: true,
-      menu: []
+      menu: [],
+      tx:require('../assets/img/woman.png')
     };
   },
   methods: {
